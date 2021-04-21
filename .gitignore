@@ -1,12 +1,7 @@
 /node_modules
 /public/hot
-/public/data
 /public/fonts
-/public/images
 /public/storage
-/public/js
-/public/css
-/public/vendors
 /storage/*.key
 /vendor
 .env
@@ -19,3 +14,4 @@ yarn-error.log
 /vuexy-shell-scripts
 supervisord.log
 supervisord.pid
+/fny2.zip
