@@ -230,7 +230,7 @@ return [
     "Crypto Trade" => "Crypto Trade",
     "Support" => "Support",
     "Help" => "Help",
-    "" => "",
+    "Account Activity" => "Account Activity",
     "" => "",
     "" => "",
     "" => "",

@@ -264,6 +264,27 @@
     },
 
     {
+      "url": "user/dashboard/",
+      "name": "My Account",
+      "icon": "mail",
+      "slug": "user-dashboard",
+      "submenu": [
+        {
+          "url": "app/invoice/list",
+          "name": "Account Settings",
+          "icon": "circle",
+          "slug": "app-invoice-list"
+        },
+        {
+          "url": "app/invoice/list",
+          "name": "Account Activity",
+          "icon": "circle",
+          "slug": "app-invoice-listss"
+        }
+      ]
+    },
+
+    {
       "url": "app/kanban",
       "name": "KYC",
       "icon": "grid",
@@ -275,27 +296,6 @@
       "name": "Referrals",
       "icon": "calendar",
       "slug": "app-calendar"
-    },
-
-    {
-      "url": "user/dashboard/",
-      "name": "My Account",
-      "icon": "mail",
-      "slug": "user-dashboard",
-      "submenu": [
-        {
-          "url": "app/invoice/list",
-          "name": "View Profile",
-          "icon": "circle",
-          "slug": "app-invoice-list"
-        },
-        {
-          "url": "app/invoice/list",
-          "name": "Edit Profile",
-          "icon": "circle",
-          "slug": "app-invoice-listss"
-        }
-      ]
     },
 
     {
