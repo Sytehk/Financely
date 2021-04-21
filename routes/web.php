@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\DashboardController;
@@ -237,6 +238,13 @@ Route::get('/', [GuestController::class,'index'])->name('home');
 Route::group(['middleware' => ['auth', 'ban']], function() {
 
     Route::get('user/dashboard', [HomeController::class,'index'])->name('userDashboard');
+    Route::get('analytics', [DashboardController::class,'dashboardAnalytics'])->name('dashboard-analytics');
+    Route::get('ecommerce', [DashboardController::class,'dashboardEcommerce'])->name('dashboard-ecommerce');
+});
+
+Route::group(['middleware' => ['admin', 'ban']], function() {
+
+    Route::get('admin/dashboard', [AdminController::class,'index'])->name('adminIndex');
     Route::get('analytics', [DashboardController::class,'dashboardAnalytics'])->name('dashboard-analytics');
     Route::get('ecommerce', [DashboardController::class,'dashboardEcommerce'])->name('dashboard-ecommerce');
 });
