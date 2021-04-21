@@ -490,7 +490,7 @@ var crCryptocoinPriceWidget = {
             }, F = V.parentDiv(m.base), J = V.bodyHtml(F);
         return V.footerHtml(F), setTimeout(function () {
             n(U, function (e) {
-                if (J.innerHTML = "", "Error" == e.Response ); else {
+
                     var t = e.RAW, i = Object.keys(t[Object.keys(t)[0]]),
                         n = "object" != typeof m.base ? m.base.split(",") : m.base, r = [];
                     for (var o in i) {
@@ -509,7 +509,7 @@ var crCryptocoinPriceWidget = {
                         I.lastChild.style.borderBottom = "0", 1 == m.striped && V.nthChild(I)
                     }
                     1 < r.length && Z(J, r[0]), V.icons(J)
-                }
+
                 var g, y;
                 1 == m.streaming && (console.log("Streaming: on"), V.streaming(J, H))
             })
