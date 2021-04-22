@@ -3,6 +3,7 @@
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserInterestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\DashboardController;
@@ -231,20 +232,58 @@ Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
 
 
-
+/*
+|--------------------------------------------------------------------------
+| Web Routes for Guests
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 Route::get('/', [GuestController::class,'index'])->name('home');
 
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes for user
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 Route::group(['middleware' => ['auth', 'ban']], function() {
 
     Route::get('user/dashboard', [HomeController::class,'index'])->name('userDashboard');
-    Route::get('analytics', [DashboardController::class,'dashboardAnalytics'])->name('dashboard-analytics');
-    Route::get('ecommerce', [DashboardController::class,'dashboardEcommerce'])->name('dashboard-ecommerce');
+
+
+    Route::get('user/message', [HomeController::class,'message'])->name('userMessage');
+    Route::get('user/message/{id}', [HomeController::class,'messageShow'])->name('userMessage.show');
+
+    /*User Investment Route*/
+    Route::get('user/investments', [UserInterestController::class,'index'])->name('userInvestments');
+
+    /*User Investment Route*/
+
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes for Admin
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 Route::group(['middleware' => ['admin', 'ban']], function() {
 
     Route::get('admin/dashboard', [AdminController::class,'index'])->name('adminIndex');
-    Route::get('analytics', [DashboardController::class,'dashboardAnalytics'])->name('dashboard-analytics');
-    Route::get('ecommerce', [DashboardController::class,'dashboardEcommerce'])->name('dashboard-ecommerce');
+
+
 });

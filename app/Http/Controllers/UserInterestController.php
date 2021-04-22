@@ -27,9 +27,11 @@ class UserInterestController extends Controller
         $user = Auth::user();
         $time = date('M j, Y  H:i:s', strtotime($user->bonus));
         $rewards = json_encode($time);
-        $invests = Plan::whereStatus(1)->get();
+        $investHourly = Plan::whereStatus(1)->whereType(1)->get();
+        $investDaily = Plan::whereStatus(1)->whereType(2)->get();
+        $investWeekly = Plan::whereStatus(1)->whereType(3)->get();
 
-        return view('user.invest.index',compact('invests','rewards'));
+        return view('user.investment.new-investment',compact('investDaily','investHourly','investWeekly','rewards'));
     }
     public function investHistory(){
         

@@ -76,13 +76,18 @@ class HomeController extends Controller
 
     public function message()
     {
+        $pageConfigs = [
+            'pageHeader' => false,
+            'contentLayout' => "content-left-sidebar",
+            'pageClass' => 'email-application',
+        ];
         $user = Auth::user();
         $time = date('M j, Y  H:i:s', strtotime($user->bonus));
         $rewards = json_encode($time);
        
-        $inboxes = Notice::whereUser_id($user->id)->orderBy('created_at', 'desc')->paginate(20);
+        $inboxes = Notice::whereUser_id($user->id)->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('user.mails.index', compact('inboxes','rewards'));
+        return view('user/mail/index', compact('inboxes','rewards'), ['pageConfigs' => $pageConfigs]);
     }
 
     public function daily()

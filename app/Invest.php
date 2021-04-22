@@ -11,7 +11,7 @@ class Invest extends Model
 
     protected $fillable = [
 
-        'plan_id', 'user_id', 'reference_id','amount','start_time','status',
+        'plan_id', 'user_id', 'reference_id','amount','start_time','status','type',
 
     ];
     public function user(){
