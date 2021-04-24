@@ -13,6 +13,7 @@ use App\pay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use PayPal\Api\PaymentExecution;
 use Stripe\Charge;
 use Stripe\Stripe;
@@ -81,7 +82,7 @@ class UserDepositsController extends Controller
         $time = date('M j, Y  H:i:s', strtotime($user->bonus));
         $rewards = json_encode($time);
 
-        return view('user.deposit.index', compact('deposits','rewards'));
+        return view('user.deposit.choose-gateway', compact('deposits','rewards'));
     }
 
     public function create()
@@ -98,7 +99,7 @@ class UserDepositsController extends Controller
         $user = Auth::user();
         $time = date('M j, Y  H:i:s', strtotime($user->bonus));
         $rewards = json_encode($time);
-        return view('user.deposit.create', compact('gateways', 'user', 'settings', 'rewards','local_gateways'));
+        return view('user.deposit.choose-gateway', compact('gateways', 'user', 'settings', 'rewards','local_gateways'));
     }
     public function cryptoConfirm(Request $request)
     {
@@ -272,7 +273,7 @@ class UserDepositsController extends Controller
 
         $deposit = Deposit::create([
 
-            'transaction_id' => str_random(6) . $user->id . str_random(6),
+            'transaction_id' => Str::random(6) . $user->id . Str::random(6),
             'user_id' => $user->id,
             'gateway_name' => $gateway->name,
             'amount' => $request->amount,
@@ -459,7 +460,7 @@ class UserDepositsController extends Controller
             'amount' => $request->amount,
             'charge' => $charge,
             'net_amount' => $new_amount,
-            'code' => str_random(10),
+            'code' => Str::random(10),
         );
 
         $user->d_code = $deposit->code;
@@ -483,7 +484,7 @@ class UserDepositsController extends Controller
 
         if ($settings->minimum_deposit > $request->amount) {
 
-            session()->flash('message', 'Ammount inputed is lower than the minimum $' . $settings->minimum_deposit . ' required to deposit money. Please adjust value first. ');
+            session()->flash('message', 'Amount inputted is lower than the minimum $' . $settings->minimum_deposit . ' required to deposit money. Please adjust value first. ');
             Session::flash('type', 'error');
             Session::flash('title', 'Minimum Deposit');
 
@@ -514,7 +515,7 @@ class UserDepositsController extends Controller
             'amount' => $request->amount,
             'charge' => $charge,
             'net_amount' => $new_amount,
-            'code' => str_random(10),
+            'code' => Str::random(10),
         );
 
 
@@ -522,7 +523,7 @@ class UserDepositsController extends Controller
         $user->save;
 
 
-        return view('user.deposit.instant', compact('gateway', 'user', 'deposit','rewards'));
+        return view('user.deposit.instant-preview', compact('gateway', 'user', 'deposit','rewards'));
 
     }
 

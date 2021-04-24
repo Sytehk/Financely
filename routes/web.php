@@ -3,6 +3,7 @@
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserDepositsController;
 use App\Http\Controllers\UserInterestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
@@ -265,8 +266,20 @@ Route::group(['middleware' => ['auth', 'ban']], function() {
 
     /*User Investment Route*/
     Route::get('user/investments', [UserInterestController::class,'index'])->name('userInvestments');
-
+    Route::post('user/investments', [UserInterestController::class,'submit'])->name('userInvestment.submit');
+    Route::post('user/investments/order/confirm/', [UserInterestController::class,'confirm'])->name('userInvestment.confirm');
+    Route::get('user/investments/history', [UserInterestController::class,'investHistory'])->name('userInvest.history');
+    Route::get('user/interest/logs', [UserInterestController::class,'interestLogs'])->name('userInvest.logs');
     /*User Investment Route*/
+
+    /*User Deposit Route*/
+
+    Route::get('user/deposit/new', [UserDepositsController::class,'create'])->name('userDeposit.create');
+    Route::post('user/deposit/preview/instant', [UserDepositsController::class,'instantPreview'])->name('instantPreview');
+    Route::post('user/deposit/preview', [UserDepositsController::class,'paymentPreview'])->name('userPaymentPreview');
+
+
+    /*User Deposit Route*/
 
 });
 

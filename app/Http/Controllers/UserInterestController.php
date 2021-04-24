@@ -6,10 +6,12 @@ use App\Interest;
 use App\InterestLog;
 use App\Invest;
 use App\Plan;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class UserInterestController extends Controller
 {
@@ -39,19 +41,18 @@ class UserInterestController extends Controller
         $time = date('M j, Y  H:i:s', strtotime($user->bonus));
         $rewards = json_encode($time);
         $user = Auth::user();
-        $investments = Invest::whereUser_id($user->id)->latest()->paginate(20);
+        $investments = Invest::whereUser_id($user->id)->latest()->paginate(10);
 
-        return view('user.invest.invest',compact('investments','rewards'));
+        return view('user.investment.history',compact('investments','rewards'));
     }
-    public function interestHistory(){
-        
+    public function interestLogs(){
         $user = Auth::user();
         $time = date('M j, Y  H:i:s', strtotime($user->bonus));
         $rewards = json_encode($time);
         $user = Auth::user();
-        $logs = InterestLog::whereUser_id($user->id)->latest()->get();
+        $logs = InterestLog::whereUser_id($user->id)->latest()->paginate(100);
 
-        return view('user.invest.log',compact('logs','rewards'));
+        return view('user.investment.logs',compact('logs','rewards'));
     }
 
 
@@ -75,7 +76,7 @@ class UserInterestController extends Controller
 
         $amount = $request->amount;
 
-        $profile = Auth::user()->profile;
+        $user = Auth::user();
 
         if ($amount < $minimum){
 
@@ -95,9 +96,9 @@ class UserInterestController extends Controller
             return redirect()->route('userInvestments');
 
         }
-        elseif ($amount > $profile->deposit_balance ){
+        elseif ($amount > $user->deposit_balance ){
 
-            session()->flash('message', "You want to invest $".$amount.". But You have only $".$profile->deposit_balance." in your deposit balance. So Deposit money first or try transfer your all money to deposit balance using fund transfer.");
+            session()->flash('message', "You want to invest $".$amount.". But You have only $".$user->deposit_balance." in your deposit balance. So Deposit money first or try transfer your all money to deposit balance using fund transfer.");
             Session::flash('type', 'error');
             Session::flash('title', 'Insufficient Funds');
 
@@ -121,9 +122,7 @@ class UserInterestController extends Controller
                 "total"=>$profit + $amount,
                 "id" => $request->plan_id,
             );
-
-
-            return view('user.invest.preview',compact('invest','rewards'));
+            return view('user.investment.preview',compact('invest','rewards'));
 
 
 
@@ -147,9 +146,9 @@ class UserInterestController extends Controller
         $user = Auth::user();
         
         $names = $request->plan;
-        $user->profile->deposit_balance = $user->profile->deposit_balance - $request->amount;
+        $user->deposit_balance = $user->deposit_balance - $request->amount;
 
-        $user->profile->save();
+        $user->save();
 
         $delay = $plan->start_duration;
 
@@ -159,7 +158,7 @@ class UserInterestController extends Controller
         $investment->user_id = $user->id;
         $investment->name = $names;
         $investment->plan_id = $request->plan_id;
-        $investment->reference_id = str_random(12);
+        $investment->reference_id = Str::random(12);
         $investment->amount = $request->amount;
         $investment->start_time = $today->addHours($delay);
         $investment->status = 0;
@@ -171,17 +170,14 @@ class UserInterestController extends Controller
         $interest->user_id = $user->id;
         
         $investment->name = $names;
-        $interest->reference_id = str_random(12);
+        $interest->reference_id = Str::random(12);
         $interest->start_time = $today->addHours($delay);
         $interest->total_repeat = 0;
         $interest->status = 0;
 
         $interest->save();
 
-
-        session()->flash('message', 'You Have Successfully Invest $'.$request->amount.' You can monitor your investment progress from My Investment Yield Tab from the menu.');
-        Session::flash('type', 'success');
-        Session::flash('title', 'Invest Successful');
+        Toastr::success('You Have Successfully Invested $'.$request->amount.' You can monitor your investment progress from My Investment Yield Tab from the menu.', 'Investment Successful');
 
         return redirect()->route('userInvest.history');
     }

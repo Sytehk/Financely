@@ -77,6 +77,18 @@
     })
 
   </script>
+
+  @section('vendor-script')
+    <!-- vendor files -->
+    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+  @endsection
+  @section('page-script')
+    <!-- Page js files -->
+    {!! Toastr::message() !!}
+    <script src="{{ asset(mix('js/scripts/extensions/ext-component-toastr.js')) }}"></script>
+  @endsection
 </body>
+
+
 
 </html>

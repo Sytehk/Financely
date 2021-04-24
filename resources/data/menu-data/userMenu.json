@@ -65,13 +65,13 @@
           "slug": "app-invoice-list"
         },
         {
-          "url": "app/invoice/list",
+          "url": "user/investments/history",
           "name": "My Investments",
           "icon": "circle",
           "slug": "app-invoice-list"
         },
         {
-          "url": "app/invoice/preview",
+          "url": "user/interest/logs",
           "name": "Investment Yield",
           "icon": "circle",
           "slug": "app-invoice-preview"
@@ -85,19 +85,19 @@
     },
 
     {
-      "url": "user/dashboard/",
+      "url": "user/deposit/new",
       "name": "Fund Wallet",
       "icon": "credit-card",
       "slug": "user-dashboard",
       "submenu": [
         {
-          "url": "app/invoice/list",
+          "url": "user/deposit/new",
           "name": "Deposit Funds",
           "icon": "circle",
           "slug": "app-invoice-list"
         },
         {
-          "url": "app/invoice/list",
+          "url": "user/deposit/history",
           "name": "Deposit History",
           "icon": "circle",
           "slug": "app-invoice-listss"

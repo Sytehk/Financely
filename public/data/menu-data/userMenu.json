@@ -18,20 +18,13 @@
     },
 
     {
-      "url": "user/dashboard/",
-      "name": "Messagesss",
-      "icon": "mail",
+      "url": "user/mail",
+      "name": "Mail",
+      "icon": "message-square",
+      "classlist": "disabled",
       "badge": "0",
-      "badgeClass": "badge badge-light-warning badge-pill ml-auto mr-1",
-      "slug": "user-dashboard",
-      "submenu": [
-        {
-          "url": "user/message",
-          "name": "Inbox",
-          "icon": "circle",
-          "slug": "app-invoice-list"
-        }
-      ]
+      "slug": "",
+      "badgeClass": "badge badge-light-warning badge-pill ml-auto mr-1"
     },
 
     {
@@ -60,25 +53,25 @@
     },
 
     {
-      "url": "user/dashboard/",
+      "url": "#",
       "name": "Investments",
       "icon": "trending-up",
       "slug": "user-investment",
       "submenu": [
         {
-          "url": "app/invoice/list",
+          "url": "user/investments",
           "name": "New Investment",
           "icon": "circle",
           "slug": "app-invoice-list"
         },
         {
-          "url": "app/invoice/list",
+          "url": "user/investments/history",
           "name": "My Investments",
           "icon": "circle",
           "slug": "app-invoice-list"
         },
         {
-          "url": "app/invoice/preview",
+          "url": "user/interest/logs",
           "name": "Investment Yield",
           "icon": "circle",
           "slug": "app-invoice-preview"
@@ -92,7 +85,7 @@
     },
 
     {
-      "url": "user/dashboard/",
+      "url": "user/deposit/new",
       "name": "Fund Wallet",
       "icon": "credit-card",
       "slug": "user-dashboard",

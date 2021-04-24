@@ -89,7 +89,7 @@
                                                 </ul>
 
                                             </div>
-                                            <form action=" " method="post">
+                                            <form action="{{route('userInvestment.submit')}}" method="post">
                                                 {{ csrf_field() }}
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -97,12 +97,12 @@
                                                 </div>
                                                 <input
                                                         class="form-control hidden"
-                                                        name="name" value="{{$invest->name}}"
+                                                        name="name" value="{{$investH->name}}"
                                                         aria-describedby="button-addon2"
                                                 />
                                                 <input
                                                         name="plan_id"
-                                                        value="{{$invest->id}}"
+                                                        value="{{$investH->id}}"
                                                         class="form-control hidden"
                                                         aria-describedby="button-addon2"
                                                 />
@@ -116,7 +116,7 @@
                                                         aria-describedby="button-addon2"
                                                 />
                                                 <div class="input-group-append" id="button-addon2">
-                                                    <button class="btn btn-outline-primary" type="button">Invest</button>
+                                                    <button class="btn btn-outline-primary" type="submit">Invest</button>
                                                 </div>
                                             </div>
                                             </form>
@@ -163,9 +163,8 @@
                                                             <li class="list-group-item">Basic form creation tools</li>
                                                             <li class="list-group-item">Up to 2 subdomains</li>
                                                         </ul>
-                                                        <button class="btn btn-block btn-outline-success mt-2">Your current plan</button>
                                                     </div>
-                                                    <form action=" " method="post">
+                                                    <form action="{{route('userInvestment.submit')}}" method="post">
                                                         {{ csrf_field() }}
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
@@ -173,12 +172,12 @@
                                                             </div>
                                                             <input
                                                                     class="form-control hidden"
-                                                                    name="name" value="{{$invest->name}}"
+                                                                    name="name" value="{{$investD->name}}"
                                                                     aria-describedby="button-addon2"
                                                             />
                                                             <input
                                                                     name="plan_id"
-                                                                    value="{{$invest->id}}"
+                                                                    value="{{$investD->id}}"
                                                                     class="form-control hidden"
                                                                     aria-describedby="button-addon2"
                                                             />
@@ -192,7 +191,7 @@
                                                                     aria-describedby="button-addon2"
                                                             />
                                                             <div class="input-group-append" id="button-addon2">
-                                                                <button class="btn btn-outline-primary" type="button">Invest</button>
+                                                                <button class="btn btn-outline-primary" type="submit">Invest</button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -239,9 +238,8 @@
                                                             <li class="list-group-item">Basic form creation tools</li>
                                                             <li class="list-group-item">Up to 2 subdomains</li>
                                                         </ul>
-                                                        <button class="btn btn-block btn-outline-success mt-2">Your current plan</button>
                                                     </div>
-                                                    <form action=" " method="post">
+                                                    <form action="{{route('userInvestment.submit')}}" method="post">
                                                         {{ csrf_field() }}
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
@@ -249,12 +247,12 @@
                                                             </div>
                                                             <input
                                                                     class="form-control hidden"
-                                                                    name="name" value="{{$invest->name}}"
+                                                                    name="name" value="{{$investW->name}}"
                                                                     aria-describedby="button-addon2"
                                                             />
                                                             <input
                                                                     name="plan_id"
-                                                                    value="{{$invest->id}}"
+                                                                    value="{{$investW->id}}"
                                                                     class="form-control hidden"
                                                                     aria-describedby="button-addon2"
                                                             />
@@ -268,7 +266,7 @@
                                                                     aria-describedby="button-addon2"
                                                             />
                                                             <div class="input-group-append" id="button-addon2">
-                                                                <button class="btn btn-outline-primary" type="button">Invest</button>
+                                                                <button class="btn btn-outline-primary" type="submit">Invest</button>
                                                             </div>
                                                         </div>
                                                     </form>

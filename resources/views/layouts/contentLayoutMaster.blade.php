@@ -20,11 +20,30 @@ $configData = Helper::applClasses();
   <link rel="shortcut icon" type="image/x-icon" href="{{asset('images/logo/favicon.ico')}}">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
+@section('vendor-style')
+  <!-- vendor css files -->
+    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
+@endsection
+@section('page-style')
+  <!-- Page css files -->
+    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
+@endsection
+
   {{-- Include core + vendor Styles --}}
   @include('panels/styles')
 
 </head>
 
+
+@section('page-script')
+  <!-- Page js files -->
+{!! Toastr::message() !!}
+@endsection
+
+@section('vendor-script')
+  {{-- Vendor js files --}}
+  <script src="{{asset('vendors/js/extensions/toastr.min.js')}}"></script>
+@endsection
 
 
 @isset($configData["mainLayoutType"])
