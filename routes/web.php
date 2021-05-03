@@ -277,7 +277,7 @@ Route::group(['middleware' => ['auth', 'ban']], function() {
     Route::get('user/deposit/new', [UserDepositsController::class,'create'])->name('userDeposit.create');
     Route::post('user/deposit/preview/instant', [UserDepositsController::class,'instantPreview'])->name('instantPreview');
     Route::post('user/deposit/preview', [UserDepositsController::class,'paymentPreview'])->name('userPaymentPreview');
-
+    Route::post('user/deposit/crypto/confirm', [UserDepositsController::class,'cryptoConfirm'])->name('cryptoConfirm');
 
     /*User Deposit Route*/
 

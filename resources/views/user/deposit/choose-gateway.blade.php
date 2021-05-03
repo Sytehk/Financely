@@ -129,31 +129,8 @@
       </div>
     </div>
   </section>
-
-
-
   <!-- Accordion with margin end -->
 
-  <!-- Accordion with margin start -->
-  <section id="accordion-with-margin">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card collapse-icon">
-          <div class="card-header">
-            <h4 class="card-title">Choose Instant Payment Gateway</h4>
-          </div>
-          <div class="card-body">
-            <p class="card-text ">
-              These payment methods are automatic for easier and effortless deposits. Funds deposited using any of these methods do not require approval from us and is instantaneous.
-            </p>
-            <div class="collapse-margin" id="accordionExample">
 
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- Accordion with margin end -->
 @endsection

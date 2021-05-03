@@ -430,12 +430,11 @@ class UserDepositsController extends Controller
 
         if ($settings->minimum_deposit > $request->amount) {
 
-            session()->flash('message', 'Ammount inputed is lower than the minimum $' . $settings->minimum_deposit . ' required to deposit money. Please adjust value first. ');
+            session()->flash('message', 'Amount inputted is lower than the minimum $' . $settings->minimum_deposit . ' required to deposit money. Please adjust value first. ');
             Session::flash('type', 'error');
             Session::flash('title', 'Minimum Deposit');
 
             return redirect(route('userDeposit.create'));
-
 
         }
 

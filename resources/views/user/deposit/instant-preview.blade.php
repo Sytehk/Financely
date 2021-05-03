@@ -3,19 +3,155 @@
 @section('title', 'Layout Empty')
 
 @section('content')
-<div class="row">
-  <div class="col-12">
-    <div class="alert alert-primary" role="alert">
-      <div class="alert-body">
-        <strong>Info:</strong> This layout can be useful for getting started with empty content section. Please check
-        the&nbsp;<a
-          class="text-primary"
-          href="https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/documentation/documentation-layouts.html#layout-empty"
-          target="_blank"
-          >Layout empty documentation</a
-        >&nbsp; for more details.
+
+  <!-- Striped rows start -->
+  <div class="row" id="table-striped">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">{{$gateway->name}} Payment Gateway</h4>
+        </div>
+        {{--        <div class="card-body">--}}
+        {{--          <p class="card-text">--}}
+        {{--            Your history below............--}}
+        {{--          </p>--}}
+        {{--        </div>--}}
+        <div class="table-responsive">
+
+            <table class="table table-striped">
+              <tbody>
+              <tr>
+                <td>Amount</td>
+                <td class="text-right">{{config('app.currency_symbol')}}{{$deposit->amount +0}}</td>
+              </tr>
+              <tr>
+                <td><span>Deposit Charge</span></td>
+                <td class="text-right text-muted"><span>{{config('app.currency_symbol')}}{{$deposit->charge + 0}}</span></td>
+              </tr>
+              <tr>
+                <td><span>Total</span></td>
+                <td><h2 class="price text-right mb-0">{{config('app.currency_symbol')}}{{($deposit-> amount + $deposit->charge) + 0}}</h2></td>
+              </tr>
+              </tbody>
+            </table>
+
+        </div>
+
       </div>
+
+      @if($gateway->id == 1)
+
+        <form action="{{route('PayPalConfirm')}}" method="post">
+          {{csrf_field()}}
+          <input type="hidden" name="cmd" value="_xclick">
+          <input type="hidden" name="business" value="robi@cronlab.io">
+          <input type="hidden" name="item_name" value="Instant Deposit">
+          <input type="hidden" name="item_number" value="{{$deposit->code}}">
+          <input type="hidden" name="tax" value="1">
+          <input type="hidden" name="quantity" value="1">
+          <input type="hidden" name="amount" value="{{$deposit->amount}}">
+          <input type="hidden" name="custom" value="{{$user->id}}">
+          <input type="hidden" name="currency_code" value="{{config('app.currency_code')}}">
+          <button class="btn btn-primary btn-block btn-lg mt-2 m-b-20 " type="submit">Proceed To Deposit</button></form>
+        <a href="{{route('userDeposit.create')}}"><button class="btn btn-secondary btn-block btn-lg mt-2" >Cancel Deposit</button></a>
+
+
+      @elseif($gateway->id == 2)
+
+        <form action="{{route('stripeConfirm')}}" method="POST">
+          {{csrf_field()}}
+          <script
+                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                  data-key="{{$gateway->val1}}"
+                  data-amount="{{$deposit->amount * 100}}"
+                  data-name="{{config('app.name')}}"
+                  data-description="Fill With Valid Card Info"
+                  data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                  data-locale="en"
+                  data-currency="{{config('app.currency_code')}}">
+          </script>
+          <input type="hidden" name="code" value="{{$deposit->code}}">
+          <input type="hidden" name="amount" value="{{$deposit->amount}}">
+          <input type="hidden" name="user_id" value="{{$user->id}}">
+          <button class="btn btn-primary btn-block btn-lg mt-2 m-b-20 " type="submit">Proceed To Deposit</button>
+        </form>
+        <a href="{{route('userDeposit.create')}}"><button class="btn btn-secondary btn-block btn-lg mt-2" >Cancel Deposit</button></a>
+
+      @elseif($gateway->id == 4)
+
+        <script src="https://js.paystack.co/v1/inline.js"></script>
+        <button class="btn btn-primary btn-block btn-lg mt-2 m-b-20 "  onclick="payWithPaystack()" >Proceed To Deposit</button>
+        <a href="{{route('userDeposit.create')}}"><button class="btn btn-secondary btn-block btn-lg mt-2" >Cancel Deposit</button></a>
+        <script>
+          function payWithPaystack(){
+            var handler = PaystackPop.setup({
+              key: "{{$gateway->val1}}",
+              email: "{{ Auth::user()->email }}",
+              amount: "{{($deposit-> amount + $deposit->charge) * 100}}",
+              currency: "NGN",
+              ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+              firstname: '',
+              lastname: '',
+              // label: "Optional string that replaces customer email"
+              metadata: {
+                custom_fields: [
+                  {
+                    display_name: "Mobile Number",
+                    variable_name: "",
+                    value: "+2348012345678"
+                  }
+                ]
+              },
+              callback: function(response){
+                alert('Deposit successful. transaction reference number is ' + response.reference);
+                window.location='../pay?amount=' + <?php echo $deposit->amount; ?> + '&&refid=' + response.reference+ '&&charge=<?php echo $deposit->amount; ?>';
+
+
+              },
+              onClose: function(){
+                alert('window closed');
+              }
+            });
+            handler.openIframe();
+          }
+        </script>
+      @elseif($gateway->id == 3)
+
+        <form action="{{route('cryptoConfirm')}}" method="POST">
+          {{csrf_field()}}
+          <div class="form-group ">
+            <label class="form-label">Select Cryptocurrency</label>
+            <select class="form-control select2-show-search" name="currency2" data-placeholder="Choose one (with searchbox)">
+              <optgroup label="Choose A Crytocurrency">
+
+                <option value="BTC" selected>BTC (BitCoin) </option>
+                <!--<option value="BCH">Bitcoin Cash (BCH) </option>-->
+                <option value="ETH">Ethereum (ETH) </option>
+                <option value="LTC">LiteCoin (LTC) </option>
+                <!--<option value="ZEC">Zcash (ZEC) </option>-->
+                <!--<option value="DASH">Dash (DASH) </option>-->
+                <!--<option value="XRP">Ripple (XRP) </option>-->
+                <!--<option value="XMR">Monero (XMR) </option>-->
+                <!--<option value="NEO">NEO (NEO) </option>-->
+                <!--<option value="ADA">Cardano (ADA) </option>-->
+                <!--<option value="EOS">EOS (EOS) </option>-->
+              </optgroup>
+            </select>
+          </div>
+
+          <input type="hidden" name="code" value="{{$deposit->code}}">
+          <input type="hidden" name="amount" value="{{$deposit->amount}}">
+          <input type="hidden" name="nothing" value="{{$user->id}}">
+          <br><br> <br><br>
+          <button class="btn btn-primary btn-block btn-lg mt-2 m-b-20 " type="submit">Proceed To Deposit</button>
+        </form>
+        <a href="{{route('userDeposit.create')}}"><button class="btn btn-secondary btn-block btn-lg mt-2"  >Cancel Deposit</button></a>
+
+        @endif
+        </form>
+
     </div>
   </div>
-</div>
+  <!-- Striped rows end -->
+
 @endsection
